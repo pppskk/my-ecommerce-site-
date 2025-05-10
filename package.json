@@ -1,0 +1,20 @@
+{
+  "name": "my-ecommerce-site-",
+  "version": "1.0.0",
+  "description": "web-technology",
+  "homepage": "https://github.com/pppskk/my-ecommerce-site-#readme",
+  "bugs": {
+    "url": "https://github.com/pppskk/my-ecommerce-site-/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pppskk/my-ecommerce-site-.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "expServer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

@@ -1532,20 +1532,20 @@
               <!-- Tab panes -->
               <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="contact-us">
-                  <form method="post" data-aos="fade">
+                  <form id="contact-form" method="post" target="http://localhost:3300/api/contact" data-aos="fade">
                     <div class="form-group row">
                       <div class="col-md-6 mb-3 mb-lg-0">
-                        <input type="text" class="form-control" placeholder="First name">
+                        <input type="text" id = "fname" name="fname" class="form-control" placeholder="First name">
                       </div>
                       <div class="col-md-6">
-                        <input type="text" class="form-control" placeholder="Last name">
+                        <input type="text" id = "lname" name="lname" class="form-control" placeholder="Last name">
                       </div>
                     </div>
 
                     <div class="form-group row">
                       <div class="col-md-12">
                         <!-- <input type="text" class="form-control" placeholder="Subject"> -->
-                        <select id="subject-list" class="form-control">
+                        <select id="subject" id="subject" class="form-control">
                           <option value="">Subject</option>
                         </select>
                       </div>
@@ -1553,12 +1553,12 @@
 
                     <div class="form-group row">
                       <div class="col-md-12">
-                        <input type="email" class="form-control" placeholder="Email">
+                        <input type="email" id = "email" name="email" class="form-control" placeholder="Email">
                       </div>
                     </div>
                     <div class="form-group row">
                       <div class="col-md-12">
-                        <textarea class="form-control" id="" cols="30" rows="10"
+                        <textarea class="form-control" id="message" name="" cols="30" rows="10"
                           placeholder="Write your message here."></textarea>
                       </div>
                     </div>
@@ -1785,18 +1785,13 @@
 
   <script>
 
-    loadDoc("./xml/class_sunday.xml", classXML);
-
-    loadDoc("./json/class_sunday.json", classJSON);
-
-    loadSubject("./json/contact_subject.json");
 
     function loadDoc(url, cFunction) {
       const xhttp = new XMLHttpRequest();
       xhttp.onload = function () { cFunction(this); }
       xhttp.open("GET", url);
       xhttp.send();
-    }                                                                                                                                                                                                                                                                   
+    }
 
     function classXML(xmlData) {
       // action goes here
@@ -1856,7 +1851,8 @@
     }
 
     function subjectList(data) {
-      const select = document.getElementById("subject-list");
+      //console.log(data)
+      const select = document.getElementById("subject");
       data.contactSubject.forEach(job => {
         console.log(job)
         const option = document.createElement("option")
@@ -1868,10 +1864,22 @@
 
     window.onload = function () {
 
+      loadDoc("./xml/class_sunday.xml", classXML);
+
+      loadDoc("./json/class_sunday.json", classJSON);
+
+      //loadSubject("./json/contact_subject.json");
+      loadSubject("http://localhost:3300/api/subject");
+      //loadSubject("http://localhost:3300");
+
       const contact = document.getElementById("contact-head");
       contact.innerHTML = "WooooW";
 
     };
+
+    function contactSubmit(){
+      document.getElementById('contact-form').submit();
+    }
 
   </script>
 
