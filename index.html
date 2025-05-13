@@ -1532,7 +1532,7 @@
               <!-- Tab panes -->
               <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="contact-us">
-                  <form id="contact-form" method="post" target="http://localhost:3300/api/contact" data-aos="fade">
+                  <form id="contact-form" data-aos="fade">
                     <div class="form-group row">
                       <div class="col-md-6 mb-3 mb-lg-0">
                         <input type="text" id = "fname" name="fname" class="form-control" placeholder="First name">
@@ -1545,7 +1545,7 @@
                     <div class="form-group row">
                       <div class="col-md-12">
                         <!-- <input type="text" class="form-control" placeholder="Subject"> -->
-                        <select id="subject" id="subject" class="form-control">
+                        <select id="subject" class="form-control">
                           <option value="">Subject</option>
                         </select>
                       </div>
@@ -1566,7 +1566,7 @@
                     <div class="form-group row">
                       <div class="col-md-6">
 
-                        <input type="submit" class="btn btn-primary py-3 px-5 btn-block" value="Send Message">
+                        <input type="button" onclick="contactSubmit()" class="btn btn-primary py-3 px-5 btn-block" value="Send Message">
                       </div>
                     </div>
 
@@ -1727,9 +1727,9 @@
           <h3 class="text-white">Subscribe</h3>
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus, odio beatae accusantium.
           </p>
-          <form action="#">
+          <form id="subscribe-form" action="#">
             <div class="d-flex mb-5">
-              <input type="text" class="form-control rounded-0" placeholder="Email">
+              <input id="subscribe-email" type="email" class="form-control rounded-0" placeholder="Email">
               <input type="submit" class="btn btn-primary rounded-0" value="Subscribe">
             </div>
           </form>
@@ -1880,6 +1880,54 @@
     function contactSubmit(){
       document.getElementById('contact-form').submit();
     }
+
+    //AJAX
+    const ajax = async (config) => {
+      const request = await fetch(config.url,{
+        method : config.method,
+        headers : {
+                    'Accept' : 'application/json',
+                    'Content-Type' : 'application/json',
+                  },
+        body : JSON.stringify(config.data)
+      });
+      const response = await request.json();
+      console.log(response.status);
+      return response;
+    }
+
+    async function contactSubmit(){
+      let data =  {
+                    fname: document.getElementById('fname').value,
+                    lname: document.getElementById('lname').value,
+                    email:document.getElementById('email').value,
+                    subject: document.getElementById('subject').value,
+                    message: document.getElementById('message').value
+                  };
+                  console.log(data);
+      let config =  {
+                    url : 'http://localhost:3300/api/contact',
+                    method : 'POST',
+                    data : data
+                    }
+      let response = await ajax(config);
+      console.log(response);
+    }
+
+    document.getElementById('subscribe-form').addEventListener('submit', async (e) => {
+      e.preventDefault(); //not refresh page !!!!important
+      let subscribeData =   {
+                              email : document.getElementById('subscribe-email').value
+                            }
+      const response = await fetch('http://localhost:3300/api/subscribe', {
+                  method : 'POST',
+                  headers : {'Content-Type' : 'application/json'},
+                  body : JSON.stringify(subscribeData)
+      }); 
+      console.log(response);
+      let result = await response.json();
+      console.log(result.message)              
+    })
 
   </script>
 
